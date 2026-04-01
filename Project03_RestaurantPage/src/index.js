@@ -1,6 +1,10 @@
+import './style.css'; // Add this at the very top
+
+
 import { loadHome } from './home';
 import { loadMenu } from './menu';
 
+// ... rest of your code
 // Initial Load
 loadHome();
 

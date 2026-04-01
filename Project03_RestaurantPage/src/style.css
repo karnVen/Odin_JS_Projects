@@ -1,0 +1,89 @@
+:root {
+    --dhaba-orange: #e67e22;
+    --curry-gold: #f1c40f;
+    --clay-red: #a04000;
+    --wood-charcoal: #2c3e50;
+    --off-white: #fdf2e9;
+    --accent-teal: #16a085;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--off-white);
+    color: var(--wood-charcoal);
+    /* Subtle jute/fabric texture */
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e67e22' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+header {
+    background-color: var(--clay-red);
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-bottom: 5px solid var(--curry-gold);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav button {
+    background: transparent;
+    border: 2px solid var(--curry-gold);
+    color: var(--curry-gold);
+    padding: 10px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+nav button:hover {
+    background-color: var(--curry-gold);
+    color: var(--clay-red);
+}
+
+#content {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+h1 {
+    color: var(--clay-red);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px dashed var(--dhaba-orange);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.menu-list li {
+    background: var(--off-white);
+    padding: 15px;
+    border-left: 5px solid var(--accent-teal);
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}

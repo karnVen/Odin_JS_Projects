@@ -21,9 +21,13 @@ export default {
   module: {
     rules: [
       {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"], // Injects CSS into the DOM and handles @import/url()
+      },
+      {
         test: /\.m?js$/,
         resolve: {
-          fullySpecified: false, // This helps with resolving imports without extensions
+          fullySpecified: false, 
         },
       },
     ],
