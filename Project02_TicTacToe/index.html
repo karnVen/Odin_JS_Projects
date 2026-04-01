@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Ven</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .square:hover {
+            background-color: #eee;
+        }
+
+        #display-result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            height: 2rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tic-Tac-Ven</h1>
+
+    <div class="controls">
+        <input type="text" id="p1-name" placeholder="Player 1 Name">
+        <input type="text" id="p2-name" placeholder="Player 2 Name">
+        <button id="start-btn">Start / Restart</button>
+    </div>
+
+    <div id="game-board"></div>
+
+    <div id="display-result"></div>
+
+    <script>
+        // Gameboard Module (IIFE)
+        const Gameboard = (function() {
+            let board = ["", "", "", "", "", "", "", "", ""];
+
+            const getBoard = () => board;
+
+            const placeMarker = (index, marker) => {
+                if (board[index] === "") {
+                    board[index] = marker;
+                    return true;
+                }
+                return false;
+            };
+
+            const resetBoard = () => {
+                board = ["", "", "", "", "", "", "", "", ""];
+            };
+
+            return { getBoard, placeMarker, resetBoard };
+        })();
+
+        // Player Factory
+        const Player = (name, marker) => {
+            return { name, marker };
+        };
+
+        // Game Controller Module (IIFE)
+        const GameController = (function() {
+            let players = [];
+            let activePlayerIndex = 0;
+            let gameOver = false;
+
+            const startGame = (name1, name2) => {
+                players = [
+                    Player(name1 || "Player 1", "X"),
+                    Player(name2 || "Player 2", "O")
+                ];
+                activePlayerIndex = 0;
+                gameOver = false;
+                Gameboard.resetBoard();
+                DisplayController.render();
+                DisplayController.setMessage(`${players[0].name}'s turn`);
+            };
+
+            const playRound = (index) => {
+                if (gameOver) return;
+
+                if (Gameboard.placeMarker(index, players[activePlayerIndex].marker)) {
+                    if (checkWin()) {
+                        gameOver = true;
+                        DisplayController.render();
+                        DisplayController.setMessage(`${players[activePlayerIndex].name} Wins!`);
+                    } else if (checkTie()) {
+                        gameOver = true;
+                        DisplayController.render();
+                        DisplayController.setMessage("It's a Tie!");
+                    } else {
+                        activePlayerIndex = activePlayerIndex === 0 ? 1 : 0;
+                        DisplayController.render();
+                        DisplayController.setMessage(`${players[activePlayerIndex].name}'s turn`);
+                    }
+                }
+            };
+
+            const checkWin = () => {
+                const board = Gameboard.getBoard();
+                const winConditions = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Cols
+                    [0, 4, 8], [2, 4, 6]             // Diagonals
+                ];
+
+                return winConditions.some(condition => {
+                    return condition.every(index => {
+                        return board[index] === players[activePlayerIndex].marker;
+                    });
+                });
+            };
+
+            const checkTie = () => {
+                return Gameboard.getBoard().every(cell => cell !== "");
+            };
+
+            return { playRound, startGame };
+        })();
+
+        // Display Controller Module (IIFE)
+        const DisplayController = (function() {
+            const boardDiv = document.querySelector("#game-board");
+            const resultDiv = document.querySelector("#display-result");
+            const startBtn = document.querySelector("#start-btn");
+            const p1Input = document.querySelector("#p1-name");
+            const p2Input = document.querySelector("#p2-name");
+
+            const render = () => {
+                boardDiv.innerHTML = "";
+                Gameboard.getBoard().forEach((marker, index) => {
+                    const square = document.createElement("div");
+                    square.classList.add("square");
+                    square.textContent = marker;
+                    square.addEventListener("click", () => {
+                        GameController.playRound(index);
+                    });
+                    boardDiv.appendChild(square);
+                });
+            };
+
+            const setMessage = (msg) => {
+                resultDiv.textContent = msg;
+            };
+
+            startBtn.addEventListener("click", () => {
+                GameController.startGame(p1Input.value, p2Input.value);
+            });
+
+            // Initial render
+            render();
+
+            return { render, setMessage };
+        })();
+    </script>
+</body>
+</html>
