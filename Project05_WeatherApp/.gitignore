@@ -1,0 +1,8 @@
+src/
+├── assets/       # Store weather icons here
+├── modules/
+│   ├── api.js    # Fetching logic
+│   └── ui.js     # DOM logic
+├── index.js      # Entry point
+├── style.css
+└── template.html
