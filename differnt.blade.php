@@ -11,8 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     @yield('css')
 
     <style>
@@ -61,23 +59,18 @@
             overflow: hidden;
         }
 
-        /* ── LOGO (Restored White BG & Larger Size) ── */
         .sb-brand {
             display: flex; align-items: center; justify-content: center;
             margin: 1.5rem 1.5rem 1rem; 
-            padding: 1rem; /* Restored padding */
-            background: var(--surface); /* Restored white background */
+            padding: 1rem; 
+            background: var(--surface); 
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             text-decoration: none; flex-shrink: 0;
             transition: var(--t);
         }
         .sb-brand:hover { text-decoration: none; transform: translateY(-1px); }
-        .sb-brand img { 
-            max-width: 100%; 
-            max-height: 60px; /* Increased size (adjust as needed) */
-            object-fit: contain; 
-        }
+        .sb-brand img { max-width: 100%; max-height: 60px; object-fit: contain; }
 
         .sb-nav { flex: 1; overflow-y: auto; padding: 1rem 0; scrollbar-width: none; }
         .sb-nav::-webkit-scrollbar { display: none; }
@@ -101,7 +94,7 @@
 
         .sb-bottom { padding: 1rem 1.5rem 1.5rem; flex-shrink: 0; display: flex; flex-direction: column; gap: 1rem; margin-top: auto; }
         .sb-illustration { text-align: center; width: 100%; display: flex; align-items: center; justify-content: center; }
-        .sb-illustration img { max-width: 100%; height: auto; object-fit: contain; }
+        .sb-illustration svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
 
         /* ── MAIN ── */
         .main { flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; min-width: 0; transition: margin-left .28s cubic-bezier(.4,0,.2,1); }
@@ -163,12 +156,11 @@
             display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1rem;
         }
         .user-pill__logout:hover { background: #FEE2E2; color: #DC2626; }
+        .user-pill__logout svg { width: 18px; height: 18px; }
 
-        /* ── SMOOTH PAGE TRANSITION ANIMATION ── */
+        /* ── SMOOTH PAGE TRANSITION ── */
         .content-body { 
-            flex: 1; 
-            padding: 2rem; 
-            opacity: 0; /* Start hidden */
+            flex: 1; padding: 2rem; opacity: 0; 
             animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
@@ -198,7 +190,7 @@
         .shell.sidebar-mini .sb-section, .shell.sidebar-mini .sb-item__dot, .shell.sidebar-mini .sb-bottom { display: none; }
         .shell.sidebar-mini .sb-item { justify-content: center; padding: 0.8rem; margin: 0.2rem 0.5rem; border-radius: var(--radius); }
         .shell.sidebar-mini .sb-item.active { margin-right: 0.5rem; }
-        .shell.sidebar-mini .sb-item__icon { margin: 0; width: auto; font-size: 18px; }
+        .shell.sidebar-mini .sb-item__icon { margin: 0; width: auto; }
         .shell.sidebar-mini .main { margin-left: var(--sidebar-mini); }
         .shell.sidebar-mini .sb-item::after { content: attr(data-label); position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%); background: var(--slate-dark); color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s; z-index: 9999; box-shadow: var(--shadow); }
         .shell.sidebar-mini .sb-item:hover::after { opacity: 1; }
@@ -217,7 +209,7 @@
             
             <a href="{{ url('agent/dashboard') }}" class="sb-item {{ request()->is('agent/dashboard*') ? 'active' : '' }}" data-label="Dashboard">
                 <span class="sb-item__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 </span>
                 Dashboard
                 @if(request()->is('agent/dashboard*'))<span class="sb-item__dot"></span>@endif
@@ -225,7 +217,7 @@
             
             <a href="{{ url('services/itr-filing') }}" class="sb-item {{ request()->is('services/itr-filing*') ? 'active' : '' }}" data-label="New Application">
                 <span class="sb-item__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-plus-icon lucide-copy-plus"><line x1="15" x2="15" y1="12" y2="18"/><line x1="12" x2="18" y1="15" y2="15"/><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                 </span>
                 New Application
             </a>
@@ -239,16 +231,14 @@
             
             <a href="{{ url('agent/applications') }}" class="sb-item {{ request()->is('agent/applications*') ? 'active' : '' }}" data-label="My Applications">
                 <span class="sb-item__icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notepad-text-icon lucide-notepad-text"><path d="M8 2v4"/><path d="M12 2v4"/><path d="M16 2v4"/><rect width="16" height="18" x="4" y="4" rx="2"/><path d="M8 10h6"/><path d="M8 14h8"/><path d="M8 18h5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 </span>
                 My Applications
             </a>
         </nav>
 
-        @php
-            $currentDay = strtolower(date('l')); // e.g., 'monday', 'tuesday'
-        @endphp
-      <div class="sb-bottom">
+        @php $currentDay = strtolower(date())@php
+        <div class="sb-bottom">
             <div class="sb-illustration">
                 @includeIf('svg.' . strtolower(date('l')))
             </div>
@@ -314,4 +304,3 @@
 @yield('js')
 </body>
 </html>
-
